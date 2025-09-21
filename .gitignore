@@ -1,0 +1,20 @@
+# Node
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+dist/
+package-*.json
+.env
+
+# Prisma
+/prisma/dev.db
+/prisma/dev.db-journal
+/prisma/*.sqlite
+/prisma/generated/
+
+# Prisma client (generated on install)
+@prisma/
+
+# VSCode
+.vscode/

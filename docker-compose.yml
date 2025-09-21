@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://expenseuser:exp3ns3pAssw0rd@172.22.48.1:5432/expensedb
+      PORT: 3000
