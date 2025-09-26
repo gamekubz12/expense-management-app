@@ -4,7 +4,9 @@ class CreateDepartment {
     }
 
     async execute(departmentData) {
-        return await this.departmentRepository.create(departmentData);
+        const result = await this.departmentRepository.create(departmentData);
+
+        return result?.toJson();
     }
 }
 

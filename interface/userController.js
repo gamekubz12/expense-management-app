@@ -6,7 +6,7 @@ class UserController {
     create = async (req, res) => {
         try {
             const user = await this.createUserUseCase.execute(req.body);
-            res.status(201).json(user.toJson());
+            res.status(201).json(user);
 
         } catch (err) {
             console.error(err);

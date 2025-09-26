@@ -7,11 +7,12 @@ class CreateUser {
 
     async execute(userData) {
         const hashedPassword = await bcrypt.hash(userData.password, 10);
-
-        return await this.userRepository.create({
+        const result = await this.userRepository.create({
             ...userData,
             password: hashedPassword
         })
+
+        return result?.toJson();
     }
 }
 
