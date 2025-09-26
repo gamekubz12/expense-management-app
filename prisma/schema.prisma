@@ -14,30 +14,46 @@ datasource db {
 }
 
 model Department {
-  id        Int    @id @default(autoincrement())
-  name      String
-  managerId Int    @unique
-  manager   User   @relation("DepartmentManager", fields: [managerId], references: [id])
+  id   Int    @id @default(autoincrement())
+  name String
 
   users User[] @relation("UserDepartment") // Employees in this department
 }
 
 model User {
-  id           Int         @id @default(autoincrement())
-  name         String
-  email        String      @unique
-  password     String
-  role         Role
-  departmentId Int?
-  department   Department? @relation("UserDepartment", fields: [departmentId], references: [id])
-  created_at   DateTime    @default(now())
+  id            Int        @id @default(autoincrement())
+  name          String
+  email         String     @unique
+  password      String
+  role          Role
+  department_id Int
+  department    Department @relation("UserDepartment", fields: [department_id], references: [id])
+  created_at    DateTime   @default(now())
 
-  // Reverse relation: if this user manages a department
-  managedDepartment Department? @relation("DepartmentManager")
+  expense_reports ExpenseReport[] @relation("ExpenseReportUser")
+  review_reports  ExpenseReport[] @relation("ExpenseReportReviewer")
+}
+
+model ExpenseReport {
+  id           Int      @id @default(autoincrement())
+  user_id      Int
+  title        String
+  description  String
+  status       Status
+  submitted_at DateTime @default(now())
+  reviewed_by  Int?
+  reviewed_at  DateTime @default(now())
+  user         User     @relation("ExpenseReportUser", fields: [user_id], references: [id])
+  reviewer     User?    @relation("ExpenseReportReviewer", fields: [reviewed_by], references: [id])
 }
 
 enum Role {
   employee
   manager
   admin
+}
+
+enum Status {
+  draft
+  submitted
 }

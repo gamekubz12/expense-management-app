@@ -1,18 +1,15 @@
 class Department {
     constructor({
         id,
-        name,
-        manager_id
+        name
     }) {
         this.id = id;
         this.name = name;
-        this.managerId = manager_id;
     }
 
     toJson = () => ({
         "id": this.id,
-        "name": this.name,
-        "manager_id": this.managerId,
+        "name": this.name
     })
 }
 
