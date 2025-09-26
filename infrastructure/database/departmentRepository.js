@@ -4,8 +4,7 @@ const Department = require('../../domain/department');
 class DepartmentRepository {
     async findById(id) {
         const result = await prisma.department.findUnique({
-            where: { id },
-            include: { manager: true }
+            where: { id }
         })
 
         if (!result) return null;
@@ -13,9 +12,9 @@ class DepartmentRepository {
         return new Department({...result});
     }
 
-    async create({ name, manager_id }) {
+    async create({ name }) {
         const result = await prisma.department.create({
-            data: { name, managerId: manager_id }
+            data: { name }
         })
 
         return new Department({ ...result });

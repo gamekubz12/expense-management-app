@@ -17,7 +17,7 @@ class UserRepository {
                 password,
                 email,
                 role,
-                departmentId: department_id
+                department_id
             }
         })
 
