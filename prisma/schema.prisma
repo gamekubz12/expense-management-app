@@ -27,7 +27,7 @@ model User {
   password      String
   role          Role
   department_id Int
-  department    Department @relation("UserDepartment", fields: [department_id], references: [id])
+  department    Department? @relation("UserDepartment", fields: [department_id], references: [id])
   created_at    DateTime   @default(now())
 
   expense_reports ExpenseReport[] @relation("ExpenseReportUser")

@@ -30,3 +30,5 @@ class ExpenseReport {
         "reviewed_at": this.reviewedAt
     })
 }
+
+module.exports = ExpenseReport;
