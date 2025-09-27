@@ -10,7 +10,8 @@ RUN npm install
 COPY . .
 
 # Generate Prisma Client
-RUN npx prisma generate
+RUN npx prisma generate && \
+    mkdir receipts
 
 EXPOSE 3000
 

@@ -5,3 +5,4 @@ Dockerfile
 docker-compose.yml
 prisma/dev.db
 prisma/migrations/
+receipts

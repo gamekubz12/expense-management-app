@@ -1,7 +1,7 @@
 const prisma = require('./client');
 const ExpenseReport = require('../../domain/expenseReport');
 
-class ExpenseReportReposity {
+class ExpenseReportRepository {
     async findByUserId(user_id) {
         const result = await prisma.expenseReport.findMany({
             where: { user_id },
@@ -36,4 +36,4 @@ class ExpenseReportReposity {
     }
 }
 
-module.exports = ExpenseReportReposity;
+module.exports = ExpenseReportRepository;

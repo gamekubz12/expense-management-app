@@ -13,12 +13,20 @@ const UserController = require('./interface/userController');
 const ExpenseReportRepository = require('./infrastructure/database/expenseReportRepository');
 const CreateExpenseReportUseCase = require('./application/expenseReport/createExpenseReportUseCase');
 const FindExpenseReportUseCase = require('./application/expenseReport/findExpenseReportUseCase');
-const ExpenseController = require('./interface/expenseReportController');
+const ExpenseReportController = require('./interface/expenseReportController');
+
+// expense
+const ExpenseRepository = require('./infrastructure/database/expenseRepository');
+const CreateExpenseUseCase = require('./application/expense/createExpenseUseCase');
+const ExpenseController = require('./interface/expenseController');
 
 // routes
 const userRoutes = require('./infrastructure/webserver/routes/userRoutes');
 const departmentRoutes = require('./infrastructure/webserver/routes/departmentRoutes');
 const expenseReportRoutes = require('./infrastructure/webserver/routes/expenseReportRoutes');
+const expenseRoutes = require('./infrastructure/webserver/routes/expenseRoutes');
+
+// express
 const createExpressApp = require('./infrastructure/webserver/expressApp');
 
 require('dotenv').config();
@@ -39,12 +47,18 @@ const main = async () => {
     const expenseReportRepository = new ExpenseReportRepository();
     const createExpenseReport = new CreateExpenseReportUseCase(expenseReportRepository);
     const findExpenseReport = new FindExpenseReportUseCase(expenseReportRepository);
-    const expenseReportController = new ExpenseController(createExpenseReport, findExpenseReport);
+    const expenseReportController = new ExpenseReportController(createExpenseReport, findExpenseReport);
+
+    // expenses
+    const expenseRepository = new ExpenseRepository();
+    const createExpense = new CreateExpenseUseCase(expenseRepository);
+    const expenseController = new ExpenseController(createExpense);
 
     const app = createExpressApp(
         userRoutes(userController),
         departmentRoutes(departmentController),
-        expenseReportRoutes(expenseReportController)
+        expenseReportRoutes(expenseReportController),
+        expenseRoutes(expenseController)
     )
     app.listen(process.env.PORT, () => console.log(`Server running on port ${process.env.PORT}`));
 }
