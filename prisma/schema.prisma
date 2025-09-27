@@ -15,36 +15,50 @@ datasource db {
 
 model Department {
   id   Int    @id @default(autoincrement())
-  name String
+  name String @db.VarChar(255)
 
   users User[] @relation("UserDepartment") // Employees in this department
 }
 
 model User {
-  id            Int        @id @default(autoincrement())
-  name          String
-  email         String     @unique
+  id            Int         @id @default(autoincrement())
+  name          String      @db.VarChar(255)
+  email         String      @unique @db.VarChar(255)
   password      String
   role          Role
   department_id Int
   department    Department? @relation("UserDepartment", fields: [department_id], references: [id])
-  created_at    DateTime   @default(now())
+  created_at    DateTime    @default(now())
 
   expense_reports ExpenseReport[] @relation("ExpenseReportUser")
   review_reports  ExpenseReport[] @relation("ExpenseReportReviewer")
 }
 
 model ExpenseReport {
-  id           Int      @id @default(autoincrement())
+  id           Int       @id @default(autoincrement())
   user_id      Int
-  title        String
+  title        String    @db.VarChar(255)
   description  String
   status       Status
-  submitted_at DateTime @default(now())
+  submitted_at DateTime?
   reviewed_by  Int?
-  reviewed_at  DateTime @default(now())
-  user         User     @relation("ExpenseReportUser", fields: [user_id], references: [id])
-  reviewer     User?    @relation("ExpenseReportReviewer", fields: [reviewed_by], references: [id])
+  reviewed_at  DateTime?
+  user         User      @relation("ExpenseReportUser", fields: [user_id], references: [id])
+  reviewer     User?     @relation("ExpenseReportReviewer", fields: [reviewed_by], references: [id])
+
+  expenses Expense[] @relation("ExpenseList")
+}
+
+model Expense {
+  id             Int            @id @default(autoincrement())
+  report_id      Int
+  category       String
+  amount         Float
+  currency       String         @db.VarChar(50)
+  expense_date   DateTime       @default(now())
+  description    String?
+  receipt_url    String?
+  expense_report ExpenseReport? @relation("ExpenseList", fields: [report_id], references: [id])
 }
 
 enum Role {

@@ -7,8 +7,10 @@ class FindExpenseReport {
         const mapRepositories = {
             findByUserId: this.expenseReportRepository.findByUserId
         }
+        const userId = parseInt(queries.user_id);
+        const result = await mapRepositories[key](userId);
 
-        return await mapRepositories[key](queries);
+        return result.map(v => v.toJson());
     }
 }
 

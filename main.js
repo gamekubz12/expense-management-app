@@ -12,6 +12,7 @@ const UserController = require('./interface/userController');
 // expense reports
 const ExpenseReportRepository = require('./infrastructure/database/expenseReportRepository');
 const CreateExpenseReportUseCase = require('./application/expenseReport/createExpenseReportUseCase');
+const FindExpenseReportUseCase = require('./application/expenseReport/findExpenseReportUseCase');
 const ExpenseController = require('./interface/expenseReportController');
 
 // routes
@@ -37,7 +38,8 @@ const main = async () => {
     // expense reports
     const expenseReportRepository = new ExpenseReportRepository();
     const createExpenseReport = new CreateExpenseReportUseCase(expenseReportRepository);
-    const expenseReportController = new ExpenseController(createExpenseReport);
+    const findExpenseReport = new FindExpenseReportUseCase(expenseReportRepository);
+    const expenseReportController = new ExpenseController(createExpenseReport, findExpenseReport);
 
     const app = createExpressApp(
         userRoutes(userController),

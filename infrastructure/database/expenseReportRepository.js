@@ -18,7 +18,8 @@ class ExpenseReportReposity {
         title,
         description,
         status,
-        reviewed_by
+        reviewed_by,
+        submitted_at
     }) {
         const result = await prisma.expenseReport.create({
             data: {
@@ -26,7 +27,8 @@ class ExpenseReportReposity {
                 title,
                 description,
                 status,
-                reviewed_by
+                reviewed_by,
+                submitted_at
             }
         })
 
